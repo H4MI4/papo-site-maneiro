@@ -61,7 +61,34 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// AA Sync Color Palette
+				'aa-entry': {
+					DEFAULT: 'hsl(var(--aa-entry))',
+					foreground: 'hsl(var(--aa-entry-foreground))'
+				},
+				'aa-advanced': {
+					DEFAULT: 'hsl(var(--aa-advanced))',
+					foreground: 'hsl(var(--aa-advanced-foreground))'
+				},
+				'aa-prospect': {
+					DEFAULT: 'hsl(var(--aa-prospect))',
+					foreground: 'hsl(var(--aa-prospect-foreground))'
+				},
+				'aa-blue': {
+					DEFAULT: 'hsl(var(--aa-blue))',
+					light: 'hsl(var(--aa-blue-light))'
+				},
+				'aa-green': {
+					DEFAULT: 'hsl(var(--aa-green))',
+					light: 'hsl(var(--aa-green-light))'
+				},
+				'aa-purple': 'hsl(var(--aa-purple))',
+				'aa-pink': 'hsl(var(--aa-pink))',
+				'aa-red': 'hsl(var(--aa-red))',
+				'aa-orange': 'hsl(var(--aa-orange))',
+				'aa-text-light': 'hsl(var(--aa-text-light))',
+				'aa-text-muted': 'hsl(var(--aa-text-muted))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
