@@ -197,4 +197,14 @@ All colors MUST be HSL.
       radial-gradient(circle at 40% 80%, hsl(var(--aa-green) / 0.1) 0%, transparent 50%),
       hsl(var(--background));
   }
+  
+  /* Animação shimmer para botões */
+  @keyframes shimmer {
+    0% { transform: translateX(-100%) skewX(-12deg); }
+    100% { transform: translateX(200%) skewX(-12deg); }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
 }
