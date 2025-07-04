@@ -1,6 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import anime from 'animejs/lib/anime.es.js';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { 
@@ -17,73 +16,9 @@ import {
 
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const heroRef = useRef(null);
-  const benefitsRef = useRef(null);
-  const productsRef = useRef(null);
 
   useEffect(() => {
     setIsLoaded(true);
-    
-    // Animação do logo AA SYNC
-    anime({
-      targets: '.aa-logo',
-      scale: [0.8, 1],
-      opacity: [0, 1],
-      duration: 2000,
-      easing: 'easeOutElastic(1, .8)',
-      delay: 500
-    });
-
-    // Animação de digitação do título
-    anime({
-      targets: '.hero-title .letter',
-      translateY: [100, 0],
-      opacity: [0, 1],
-      duration: 1200,
-      delay: (el, i) => 1000 + 50 * i,
-      easing: 'easeOutExpo'
-    });
-
-    // Animação de pulsação do botão CTA
-    anime({
-      targets: '.cta-button',
-      scale: [1, 1.05, 1],
-      duration: 2000,
-      loop: true,
-      easing: 'easeInOutSine'
-    });
-
-    // Animação dos cards de benefícios
-    anime({
-      targets: '.benefit-card',
-      translateY: [50, 0],
-      opacity: [0, 1],
-      duration: 800,
-      delay: anime.stagger(200, {start: 2500}),
-      easing: 'easeOutCubic'
-    });
-
-    // Animação dos cards de produtos
-    anime({
-      targets: '.product-card',
-      rotateY: [90, 0],
-      opacity: [0, 1],
-      duration: 1000,
-      delay: anime.stagger(300, {start: 3500}),
-      easing: 'easeOutBack'
-    });
-
-    // Animação de partículas flutuantes
-    anime({
-      targets: '.floating-particle',
-      translateY: [-20, 20],
-      duration: 3000,
-      direction: 'alternate',
-      loop: true,
-      easing: 'easeInOutSine',
-      delay: anime.stagger(500)
-    });
-
   }, []);
 
   const benefits = [
@@ -154,25 +89,61 @@ const Index = () => {
             transition={{ duration: 1, delay: 0.2 }}
             className="mb-8"
           >
-            <div className="aa-logo text-8xl font-bold mb-6 text-gradient-aa-main aa-pulse-glow relative">
-              <div className="floating-particle absolute -top-4 -right-4 w-3 h-3 bg-aa-blue rounded-full opacity-70"></div>
-              <div className="floating-particle absolute -bottom-2 -left-6 w-2 h-2 bg-aa-purple rounded-full opacity-50"></div>
-              <div className="floating-particle absolute top-1/2 -right-8 w-4 h-4 bg-aa-green rounded-full opacity-60"></div>
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+              className="text-8xl font-bold mb-6 text-gradient-aa-main aa-pulse-glow relative"
+            >
+              <motion.div 
+                animate={{ 
+                  y: [0, -20, 0],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{ 
+                  duration: 3, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="absolute -top-4 -right-4 w-3 h-3 bg-aa-blue rounded-full"
+              />
+              <motion.div 
+                animate={{ 
+                  y: [0, 20, 0],
+                  opacity: [0.5, 0.8, 0.5]
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity, 
+                  ease: "easeInOut",
+                  delay: 1
+                }}
+                className="absolute -bottom-2 -left-6 w-2 h-2 bg-aa-purple rounded-full"
+              />
+              <motion.div 
+                animate={{ 
+                  y: [0, -15, 0],
+                  opacity: [0.6, 1, 0.6]
+                }}
+                transition={{ 
+                  duration: 2.5, 
+                  repeat: Infinity, 
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
+                className="absolute top-1/2 -right-8 w-4 h-4 bg-aa-green rounded-full"
+              />
               AA SYNC
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 30 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="text-4xl md:text-6xl font-bold mb-6 hero-title"
+            className="text-4xl md:text-6xl font-bold mb-6"
           >
-            {"A revolução da automação inteligente está ao seu alcance".split('').map((letter, i) => (
-              <span key={i} className="letter inline-block" style={{display: letter === ' ' ? 'inline' : 'inline-block'}}>
-                {letter === ' ' ? '\u00A0' : letter}
-              </span>
-            ))}
+            A revolução da <span className="text-gradient-aa-main">automação inteligente</span> está ao seu alcance
           </motion.h1>
 
           <motion.p
@@ -189,13 +160,18 @@ const Index = () => {
             animate={{ opacity: isLoaded ? 1 : 0, scale: isLoaded ? 1 : 0.8 }}
             transition={{ duration: 0.8, delay: 1.1 }}
           >
-            <Button 
-              size="lg" 
-              className="cta-button bg-gradient-aa-main hover:scale-105 transition-transform duration-300 text-xl px-8 py-6 aa-glow-blue relative overflow-hidden"
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <span className="relative z-10">Transforme seu Negócio com IA</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
-            </Button>
+              <Button 
+                size="lg" 
+                className="bg-gradient-aa-main hover:scale-105 transition-transform duration-300 text-xl px-8 py-6 aa-glow-blue relative overflow-hidden animate-pulse"
+              >
+                <span className="relative z-10">Transforme seu Negócio com IA</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -222,17 +198,21 @@ const Index = () => {
             {benefits.map((benefit, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 50, rotateX: 45 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, rotateY: 5 }}
                 className="group"
               >
-                <Card className="benefit-card p-6 bg-card/50 border-border/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 h-full hover:shadow-2xl hover:shadow-aa-blue/20">
-                  <div className="text-primary mb-4 group-hover:text-aa-blue transition-colors duration-300 transform group-hover:scale-110">
+                <Card className="p-6 bg-card/50 border-border/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 h-full hover:shadow-2xl hover:shadow-aa-blue/20 transform-gpu">
+                  <motion.div 
+                    className="text-primary mb-4 group-hover:text-aa-blue transition-colors duration-300"
+                    whileHover={{ scale: 1.2, rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     {benefit.icon}
-                  </div>
+                  </motion.div>
                   <h3 className="text-xl font-semibold mb-3 text-foreground">
                     {benefit.title}
                   </h3>
@@ -271,27 +251,39 @@ const Index = () => {
             {products.map((product, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                initial={{ opacity: 0, y: 50, rotateY: 90 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, rotateY: -5 }}
                 className="group cursor-pointer"
               >
-                <Card className={`product-card p-8 ${product.gradient} border-none h-full relative overflow-hidden group-hover:shadow-2xl transition-all duration-300`}>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  <div className="text-white mb-6 group-hover:scale-110 transition-transform duration-300 relative z-10">
+                <Card className={`p-8 ${product.gradient} border-none h-full relative overflow-hidden group-hover:shadow-2xl transition-all duration-500 transform-gpu`}>
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                  />
+                  <motion.div 
+                    className="text-white mb-6 relative z-10"
+                    whileHover={{ scale: 1.2, rotate: 10 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     {product.icon}
-                  </div>
+                  </motion.div>
                   <h3 className="text-2xl font-bold text-white mb-2 relative z-10">
                     {product.title}
                   </h3>
                   <p className="text-white/90 text-lg relative z-10">
                     {product.subtitle}
                   </p>
-                  <div className="absolute bottom-2 right-2 text-white/30 text-sm font-mono">
+                  <motion.div 
+                    className="absolute bottom-2 right-2 text-white/30 text-sm font-mono"
+                    animate={{ opacity: [0.3, 0.8, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
                     AI POWERED
-                  </div>
+                  </motion.div>
                 </Card>
               </motion.div>
             ))}
